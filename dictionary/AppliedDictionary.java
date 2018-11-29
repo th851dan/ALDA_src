@@ -42,7 +42,7 @@ public class AppliedDictionary {
 							System.exit(0);
 						}
 					} else {
-						file = new File("E:\\AIN\\ALDA\\ALDA_workspace\\aufgaben\\src\\dictionary\\" + parts[parts.length-1]);
+						file = new File("C:\\Users\\ds-05\\eclipse-workspace\\ALDA\\src\\dictionary\\" + parts[parts.length-1]);
 					}
 					BufferedReader br = new BufferedReader(new FileReader(file));
 					String st;
