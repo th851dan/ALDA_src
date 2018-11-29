@@ -17,20 +17,20 @@ public class DictionaryTest {
 	 */
 	public static void main(String[] args)  {
 		
-//		testSortedArrayDictionary();
-//		testHashDictionary();
+		testSortedArrayDictionary();
+		testHashDictionary();
 		testBinaryTreeDictionary();
 	}
 
-//	private static void testSortedArrayDictionary() {
-//		Dictionary<String, String> dict = new SortedArrayDictionary<>();
-//		testDict(dict);
-//	}
-//	
-//	private static void testHashDictionary() {
-//		Dictionary<String, String> dict = new HashDictionary<>();
-//		testDict(dict);
-//	}
+	private static void testSortedArrayDictionary() {
+		Dictionary<String, String> dict = new SortedArrayDictionary<>();
+		testDict(dict);
+	}
+	
+	private static void testHashDictionary() {
+		Dictionary<String, String> dict = new HashDictionary<>();
+		testDict(dict);
+	}
 	
 	private static void testBinaryTreeDictionary() {
 		Dictionary<String, String> dict = new BinaryTreeDictionary<>();
