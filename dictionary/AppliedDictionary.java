@@ -5,10 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
 public class AppliedDictionary {
 
 	public static void main(String[] args) throws IOException {
-		Scanner sc = new Scanner(System.in);
+		try (Scanner sc = new Scanner(System.in)){
 		Dictionary<String, String> dict = null;
 		while (sc.hasNext()) {
 			String s = sc.nextLine();
@@ -26,9 +29,24 @@ public class AppliedDictionary {
 					}
 					break;
 				case "read":
-					BufferedReader br = new BufferedReader(new FileReader(new File("/home/student/PERSISTENT/ALDA_workspace/aufgaben/src/dictionary/" + parts[parts.length-1])));
+					File file = null;
+					if (parts.length == 1) {
+						JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+						fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+						int ret = fc.showOpenDialog(null);
+						if (ret == JFileChooser.APPROVE_OPTION) {
+							file = fc.getSelectedFile();
+							System.out.println(file.getName() + "  eingelesen.");
+						} else {
+							System.err.println("Einlesen fehlgeschlagen.");
+							System.exit(0);
+						}
+					} else {
+						file = new File("E:\\AIN\\ALDA\\ALDA_workspace\\aufgaben\\src\\dictionary\\" + parts[parts.length-1]);
+					}
+					BufferedReader br = new BufferedReader(new FileReader(file));
 					String st;
-					if (parts.length == 2) {
+					if (parts.length == 2 || parts.length == 1) {
 						while ((st = br.readLine()) != null) {
 							String[] elm = st.split(" ");
 							dict.insert(elm[0], elm[1]);
@@ -44,7 +62,7 @@ public class AppliedDictionary {
 							}
 							long end = System.nanoTime();
 							double timeread = end - start;
-							System.out.println("Reading " + n +" lasted: " + timeread);
+							System.out.println("Reading " + n +" took: " + timeread);
 						}
 					}
 
@@ -59,7 +77,7 @@ public class AppliedDictionary {
 					System.out.println(dict.search(parts[1]));
 					long end = System.nanoTime();
 					long timefind = end - start;
-					System.out.println("Finding lasted: " + timefind);
+					System.out.println("Finding took: " + timefind);
 					break;
 				case "i":
 					System.out.println(dict.insert(parts[1], parts[2]));
@@ -75,5 +93,6 @@ public class AppliedDictionary {
 					System.out.println("Invalid Syntax");
 			}
 		}
+	}
 	}
 }

@@ -65,7 +65,6 @@ public interface Dictionary<K,V> extends Iterable<Dictionary.Entry<K,V>> {
 	class Entry<K,V> {
 		private final K key;
 		private V value;
-
 		/**
 		 *
 		 * @param key
