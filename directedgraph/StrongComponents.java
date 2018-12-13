@@ -5,6 +5,8 @@ package directedgraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -26,7 +28,7 @@ public class StrongComponents<V> {
     // Component 2: 1, 2, 3,
     // Component 3: 4,
 
-	private final Map<Integer,Set<V>> comp = new TreeMap<>();
+	private final Map<Integer,List<V>> comp = new TreeMap<>();
 	
 	/**
 	 * Ermittelt alle strengen Komponenten mit
@@ -34,7 +36,23 @@ public class StrongComponents<V> {
 	 * @param g gerichteter Graph.
 	 */
 	public StrongComponents(DirectedGraph<V> g) {
-		// ...
+		DepthFirstOrder<V> dfs = new DepthFirstOrder<>(g);
+		List<V> p = dfs.postOrder();
+		List<V> p1 = new LinkedList<>();
+		for (int i = 0; i < p.size(); i++) {
+			p1.add(p.get(p.size() - 1 - i));
+		}
+		DirectedGraph<V> g1 = g.invert();
+		DepthFirstOrder<V> dfs1 = new DepthFirstOrder<>(g1);
+		int i = 0;
+		List<V> besucht = new LinkedList<>();
+		for (V v : p1) {
+			if (besucht.contains(v))
+				continue;
+			List<V> l = new LinkedList<>();
+			dfs1.visitDF(v, g1, l, besucht, 0);
+			comp.put(i++, l);
+		}
 	}
 	
 	/**
@@ -47,7 +65,11 @@ public class StrongComponents<V> {
 
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		StringBuffer s = new StringBuffer();
+		for (int i = 0; i < comp.size(); i++) {
+			s.append("Component ").append(i).append(": ").append(comp.get(i).toString()).append("\n");
+		}
+		return s.toString();
 	}
 	
 	/**
@@ -99,7 +121,7 @@ public class StrongComponents<V> {
 	}
 	
 	private static void test2() throws FileNotFoundException {
-		DirectedGraph<Integer> g = readDirectedGraph(new File("mediumDG.txt"));
+		DirectedGraph<Integer> g = readDirectedGraph(new File("E:\\AIN\\ALDA\\ALDA_workspace\\aufgaben\\src\\directedgraph\\mediumDG.txt"));
 		System.out.println(g.getNumberOfVertexes());
 		System.out.println(g.getNumberOfEdges());
 		System.out.println(g);

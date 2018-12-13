@@ -5,6 +5,8 @@ package directedgraph;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Klasse für Tiefensuche.
@@ -19,7 +21,6 @@ public class DepthFirstOrder<V> {
     private final List<V> postOrder = new LinkedList<>();
     private final DirectedGraph<V> myGraph;
     private int numberOfDFTrees = 0;
-	// ...
 
     /**
      * Führt eine Tiefensuche für g durch.
@@ -28,9 +29,35 @@ public class DepthFirstOrder<V> {
      */
     public DepthFirstOrder(DirectedGraph<V> g) {
         myGraph = g;
-        // ...
+        for (V v : myGraph.getVertexSet()) {
+        	if (preOrder.contains(v))
+        		continue;
+        	numberOfDFTrees++;
+        	visitDF(v,myGraph,preOrder,postOrder);
+        }
     }
-
+    private void visitDF(V v, DirectedGraph<V> g, List<V> pre, List<V> post) {
+    	pre.add(v);
+    	for (V w : g.getSuccessorVertexSet(v)) {
+    		if (!pre.contains(w)) {
+    			visitDF(w,g,pre,post);
+    		}
+    	}
+    	post.add(v);
+    }
+    
+    public void visitDF(V v, DirectedGraph<V> g, List<V> pre, List<V> besucht, int n) {
+    	if (!besucht.contains(v)) {
+    		pre.add(v);
+    		besucht.add(v);
+    	}
+    	for (V w : g.getSuccessorVertexSet(v)) {
+    		if (!besucht.contains(w)) {
+    			visitDF(w,g,pre,besucht,n);
+    		}
+    	}
+    }
+    
     /**
      * Liefert eine nicht modifizierbare Liste (unmodifiable view) mit einer
      * Pre-Order-Reihenfolge zurück.
