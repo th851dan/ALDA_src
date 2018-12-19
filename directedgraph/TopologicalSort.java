@@ -35,10 +35,10 @@ public class TopologicalSort<V> {
     	for (V v : g.getVertexSet()) {
     		besucht.add(v);
     		int size = g.getPredecessorVertexSet(v).size();
-    		for (V w : g.getPredecessorVertexSet(v)) {
-    			if (besucht.contains(w))
-    				size--;
-    		}
+//    		for (V w : g.getPredecessorVertexSet(v)) {
+//    			if (besucht.contains(w))
+//    				size--;
+//    		}
     		inDegree.put(v, size);
     		if (size == 0) {
     			q.add(v);
