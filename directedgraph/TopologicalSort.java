@@ -89,15 +89,15 @@ public class TopologicalSort<V> {
 		g1.addEdge("Unterhose", "Hose");
 		g1.addEdge("Unterhemd", "Hemd");
 		g1.addEdge("Hose", "Schuhe");
-		g1.addEdge("Hose", "Gürtel");
+		g1.addEdge("Hose", "GÃ¼rtel");
 		g1.addEdge("Socken", "Schuhe");
 		g1.addEdge("Hemd", "Pulli");
 		g1.addEdge("Schuhe", "Handschuhe");
-		g1.addEdge("Gürtel", "Mantel");
+		g1.addEdge("GÃ¼rtel", "Mantel");
 		g1.addEdge("Pulli", "Mantel");
 		g1.addEdge("Mantel", "Schal");
 		g1.addEdge("Schal", "Handschuhe");
-		g1.addEdge("Mütze", "Handschuhe");
+		g1.addEdge("MÃ¼tze", "Handschuhe");
 		
 		
 		TopologicalSort<String> ts1 = new TopologicalSort<>(g1);
